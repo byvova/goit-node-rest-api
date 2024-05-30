@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { handleMongooseError } from "../helpers/handleMongooseError.js";
-
 import Joi from "joi";
 
 export const createContactSchema = Joi.object({

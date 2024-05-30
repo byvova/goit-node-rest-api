@@ -7,11 +7,9 @@ import {
   updateContact,
   updateStatusContact,
 } from "../controllers/contactsControllers.js";
-
 import { validateBody } from "../middlewares/validateBody.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValid } from "../middlewares/isValid.js";
-
 import {
   createContactSchema,
   updateContactSchema,
@@ -39,7 +37,6 @@ contactsRouter.put(
   validateBody(updateContactSchema),
   updateContact
 );
-
 contactsRouter.patch(
   "/:id/favorite",
   validateBody(updateFavoriteSchema),
