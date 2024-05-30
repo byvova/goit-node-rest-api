@@ -1,5 +1,6 @@
 import { Contact } from "../models/contact.js";
-import HttpError from "../helpers/HttpError.js";
+
+import { HttpError } from "../helpers/HttpError.js";
 
 export const getAllContacts = async (req, res) => {
   const result = await Contact.find();
