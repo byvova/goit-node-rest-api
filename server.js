@@ -1,21 +1,38 @@
-import mongoose from "mongoose";
-import app from "./app.js";
-import dotenv from "dotenv";
+import express from "express";
+import fs from "fs";
 
-dotenv.config();
-const { DB_HOST, PORT = 3002 } = process.env;
+const app = express();
+const PORT = 3001;
 
-mongoose.set("strictQuery", true);
+app.use(express.json());
 
-mongoose
-  .connect(DB_HOST)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running. Use our API on port: ${PORT}`);
-    });
-    console.log("Database connection successful");
-  })
-  .catch((error) => {
-    console.log(error.message);
-    process.exit(1);
-  });
+app.get("/contacts", (req, res) => {
+  try {
+    const contacts = JSON.parse(fs.readFileSync("contacts.json", "utf-8"));
+    res.json(contacts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.post("/contacts", (req, res) => {
+  try {
+
+    const contacts = JSON.parse(fs.readFileSync("contacts.json", "utf-8"));
+    const newContact = req.body;
+
+    contacts.push(newContact);
+    
+
+    fs.writeFileSync("contacts.json", JSON.stringify(contacts, null, 2));
+    
+    res.json({ message: "Contact added successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
