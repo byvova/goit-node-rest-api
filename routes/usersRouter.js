@@ -8,8 +8,10 @@ import {
   logout,
   current,
   updateSubscription,
+  updateAvatar,
 } from "../controllers/usersControllers.js";
 import { isValid } from "../middlewares/isValid.js";
+import upload from "../middlewares/upload.js";
 
 export const usersRouter = express.Router();
 
@@ -25,4 +27,11 @@ usersRouter.patch(
   isValid,
   validateBody(schemas.updateSubscriptionSchema),
   updateSubscription
+);
+
+usersRouter.patch(
+  "/avatar",
+  authenticate,
+  upload.single("avatar"),
+  updateAvatar
 );
