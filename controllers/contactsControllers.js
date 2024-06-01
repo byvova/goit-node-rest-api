@@ -8,7 +8,6 @@ export const getAllContacts = async (req, res) => {
 
 export const getOneContact = async (req, res) => {
   const { id } = req.params;
-  console.log(req.params);
   const result = await Contact.findById(id);
 
   if (!result) {
