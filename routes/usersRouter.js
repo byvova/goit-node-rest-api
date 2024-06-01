@@ -9,6 +9,8 @@ import {
   current,
   updateSubscription,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 } from "../controllers/usersControllers.js";
 import { isValid } from "../middlewares/isValid.js";
 import upload from "../middlewares/upload.js";
@@ -18,6 +20,13 @@ export const usersRouter = express.Router();
 usersRouter.post("/register", validateBody(schemas.registerSchema), register);
 usersRouter.post("/login", validateBody(schemas.loginSchema), login);
 usersRouter.post("/logout", authenticate, logout);
+
+usersRouter.post(
+  "/verify",
+  validateBody(schemas.emailSchema),
+  resendVerifyEmail
+);
+usersRouter.get("/verify/:verificationToken", verifyEmail);
 
 usersRouter.get("/current", authenticate, current);
 
