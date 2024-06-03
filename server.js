@@ -3,10 +3,7 @@ import app from "./app.js";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 const { DB_HOST, PORT = 3003 } = process.env;
-
-
 
 mongoose.set("strictQuery", true);
 
